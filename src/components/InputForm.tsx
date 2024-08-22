@@ -1,16 +1,20 @@
 "use client";
+import { addTodo } from "@/redux/TodoSlice";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import TodoList from "./TodoList";
 
 const InputForm = () => {
   const [todo, setTodo] = useState("");
+  const dispatch = useDispatch();
   const handleTodo = (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
     e.preventDefault();
-    console.log(todo);
     if (todo === "") {
       toast.error("Please write your todo");
     } else {
+      dispatch(addTodo({ _id: Math.random().toString(), todo: todo }));
       toast.success("Todo add successfully");
       setTodo("");
     }
@@ -47,6 +51,8 @@ const InputForm = () => {
           Add todo
         </button>
       </form>
+      {/* todo list */}
+      <TodoList />
     </div>
   );
 };
